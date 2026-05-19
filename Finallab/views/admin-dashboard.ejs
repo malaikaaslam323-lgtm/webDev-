@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - KIKO MILANO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/admin.css">
+</head>
+<body>
+
+    <div class="admin-top-bar">
+        <span>KIKO MILANO BACK OFFICE &bull; CENTRAL CONTROL PANEL</span>
+    </div>
+
+    <header class="admin-site-header">
+        <div class="header-container">
+            <div class="header-side-left">
+                <span class="admin-badge-indicator">SYSTEM ADMIN</span>
+            </div>
+            
+            <div class="admin-logo">
+                <img src="/Logo.webp" alt="KIKO Milano">
+            </div>
+
+            <div class="header-side-right">
+                <a href="/" class="return-store-btn" target="_blank" rel="noopener noreferrer">
+                    RETURN TO STORE 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-action-bar">
+        <div class="title-block">
+            <h1>ADMIN DASHBOARD</h1>
+            <p>INVENTORY & SYSTEM MANAGEMENT</p>
+        </div>
+        <div style="display: flex; gap: 15px;">
+            <a href="/admin/sales" class="btn-add-new-product" style="background-color: #fff; color: #000;">VIEW LIVE SALES</a>
+            
+            <a href="/admin/product/add" class="btn-add-new-product">+ ADD NEW PRODUCT</a>
+        </div>
+    </div>
+
+    <% if (success_msg && success_msg.length > 0) { %>
+        <div class="alert alert-success"><%= success_msg %></div>
+    <% } %>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-info">
+                <span class="stat-title">Total Products</span>
+                <span class="stat-value"><%= totalProducts %></span>
+            </div>
+            <div class="stat-icon-wrapper">🛍️</div>
+        </div>
+        <div class="stat-card highlighted-card">
+            <div class="stat-info">
+                <span class="stat-title">Inventory Value</span>
+                <span class="stat-value">Rs. <%= totalValue.toLocaleString() %></span>
+            </div>
+            <div class="stat-icon-wrapper">💰</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-info">
+                <span class="stat-title">Low Stock Alerts</span>
+                <span class="stat-value <%= lowStockCount > 0 ? 'text-danger' : '' %>"><%= lowStockCount %></span>
+            </div>
+            <div class="stat-icon-wrapper">⚠️</div>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Price (PKR)</th>
+                    <th>Stock</th>
+                    <th style="text-align: center;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% products.forEach(product => { %>
+                    <tr>
+                        <td>
+                            <div class="table-thumb-container">
+                                <img src="/<%= product.image %>" class="thumb" onerror="this.src='/Logo.webp'">
+                            </div>
+                        </td>
+                        <td class="product-name-cell"><%= product.name %></td>
+                        <td><span class="category-pill"><%= product.category %></span></td>
+                        <td class="price-cell"><%= product.price.toLocaleString() %></td>
+                        <td>
+                            <span class="stock-count <%= product.stock < 5 ? 'low-stock-alert' : '' %>">
+                                <%= product.stock %>
+                            </span>
+                        </td>
+                        <td>
+                            <div class="action-btns">
+                                <a href="/admin/product/edit/<%= product._id %>" class="btn-action-edit">EDIT</a>
+                                
+                                <form action="/admin/product/delete/<%= product._id %>" method="POST" style="margin: 0;" onsubmit="return confirm('WARNING: Are you sure you want to permanently delete this product?');">
+                                    <button type="submit" class="btn-action-delete">DELETE</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
