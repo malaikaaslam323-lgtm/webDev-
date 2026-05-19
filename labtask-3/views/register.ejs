@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Account - KIKO MILANO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* Exact same styles as Login to keep it consistent! */
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #fef4f5 0%, #f7d6d9 100%); 
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* Floating Back Button */
+        /* Upgraded Premium Back Button */
+        .back-btn {
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            text-decoration: none;
+            color: #222;
+            font-size: 12px; /* Slightly smaller for elegance */
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: 1.5px;
+            
+            /* The Frosted Glass Effect */
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px 10px 15px;
+            border-radius: 50px; /* Makes it a perfect pill shape */
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        /* The Hover Animation */
+        .back-btn:hover {
+            background: #fff;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            transform: translateY(-2px); /* Lifts up slightly */
+        }
+        
+        .back-btn svg {
+            transition: transform 0.3s ease;
+        }
+        
+        .back-btn:hover svg {
+            transform: translateX(-4px); /* Arrow slides left to say "Go Back!" */
+        }
+        .auth-card {
+            width: 100%;
+            max-width: 450px;
+            padding: 40px;
+        }
+        .auth-title {
+            text-align: center;
+            font-weight: 800;
+            font-size: 22px;
+            letter-spacing: 3px;
+            color: #222;
+            margin-bottom: 35px;
+        }
+        .kiko-fieldset {
+            border: 1px solid #b0b0b0;
+            border-radius: 8px;
+            padding: 0 15px 12px 15px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+        .kiko-fieldset:focus-within {
+            border-color: #111; 
+        }
+        .kiko-legend {
+            padding: 0 5px;
+            font-size: 12px;
+            color: #444;
+        }
+        .kiko-input {
+            width: 100%;
+            border: none;
+            background: transparent;
+            outline: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 15px;
+            color: #111;
+        }
+        .kiko-btn {
+            width: 100%;
+            background-color: #222;
+            color: #fff;
+            padding: 16px;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        .kiko-btn:hover { background-color: #000; }
+        .auth-links {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 13px;
+            color: #444;
+        }
+        .auth-links a {
+            color: #222;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        .flash-msg {
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .flash-error { background-color: #ffe6e6; color: #cc0000; }
+    </style>
+</head>
+<body>
+    <a href="/" class="back-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        BACK TO HOME
+    </a>
+
+    <div class="auth-card">
+        <div class="auth-title">CREATE ACCOUNT</div>
+
+        <% if (error_msg && error_msg.length > 0) { %>
+            <div class="flash-msg flash-error"><%= error_msg %></div>
+        <% } %>
+
+        <form action="/register" method="POST">
+            <fieldset class="kiko-fieldset">
+                <legend class="kiko-legend">First & Last name *</legend>
+                <input type="text" name="name" class="kiko-input" required>
+            </fieldset>
+
+            <fieldset class="kiko-fieldset">
+                <legend class="kiko-legend">Email address *</legend>
+                <input type="email" name="email" class="kiko-input" required>
+            </fieldset>
+
+            <fieldset class="kiko-fieldset">
+                <legend class="kiko-legend">Password *</legend>
+                <input type="password" name="password" class="kiko-input" required minlength="6">
+            </fieldset>
+
+            <div style="font-size: 11px; color: #555; margin-bottom: 15px;">* Mandatory</div>
+
+            <button type="submit" class="kiko-btn">REGISTER</button>
+        </form>
+
+        <div class="auth-links">
+            Already have an account? <a href="/login">Log in here</a>
+        </div>
+    </div>
+
+</body>
+</html>
